@@ -1,6 +1,7 @@
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { ConversationService } from './conversation.service';
 import { Conversation } from './conversation.entity';
+import { CreateConversationInput } from './dto/create-conversation.dto';
 
 @Resolver(of => Conversation)
 export class ConversationResolver {
@@ -12,14 +13,14 @@ export class ConversationResolver {
   }
 
   @Query(returns => Conversation)
-  async conversation(@Args('id') id: string) {
+  async conversation(@Args('id', { type: () => String }) id: string) {
     return this.conversationService.findOne(id);
   }
 
   @Mutation(returns => Conversation)
   async createConversation(
-    @Args('participants') participants: string[],
+    @Args('createConversationInput') createConversationInput: CreateConversationInput,
   ) {
-    return this.conversationService.create({ participants });
+    return this.conversationService.create(createConversationInput);
   }
 }

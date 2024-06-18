@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
+import { CreateConversationInput } from './dto/create-conversation.dto';
 
 @Injectable()
 export class ConversationService {
@@ -24,8 +25,14 @@ export class ConversationService {
     });
   }
 
-  async create(data: any) {
-    return this.prisma.conversation.create({ data });
+  async create(data: CreateConversationInput) {
+    return this.prisma.conversation.create({
+      data: {
+        participants: {
+          connect: data.participants.map(id => ({ id })),
+        },
+      },
+    });
   }
 
   async update(id: string, data: any) {
