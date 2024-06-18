@@ -13,4 +13,3 @@ services:
       POSTGRES_DB: messaging
     ports:
       - '5432:5432'
-  

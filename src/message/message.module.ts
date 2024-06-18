@@ -15,7 +15,7 @@ import { RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
           type: 'topic',
         },
       ],
-      uri: 'amqp://localhost',
+      uri: 'amqp://guest:guest@localhost:5672',
     }),
   ],
   providers: [MessageService, MessageResolver, MessageProducer, MessageConsumer, PrismaService], // Provide PrismaService
