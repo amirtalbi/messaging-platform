@@ -1,10 +1,11 @@
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { UserService } from './user.service';
 import { User } from './user.entity';
+import { RabbitMQService } from 'src/rabbitmq/rabbitmq.service';
 
 @Resolver(of => User)
 export class UserResolver {
-  constructor(private readonly userService: UserService) {}
+  constructor(private readonly userService: UserService, private readonly rabbitMQService: RabbitMQService) {}
 
   @Query(returns => [User])
   async users() {
@@ -22,6 +23,13 @@ export class UserResolver {
     @Args('username') username: string,
     @Args('password') password: string,
   ) {
-    return this.userService.create({ email, username, password });
+    const user = this.userService.create({ email, username, password });
+    if(!user) {
+      throw new Error('User already exists');
+    }
+    
+    this.rabbitMQService.assertQueue(username);
+
+    return user;
   }
 }

@@ -4,18 +4,26 @@ import { MessageService } from './message.service';
 @Injectable()
 export class MessageConsumer {
   constructor(private readonly messageService: MessageService) {}
-  private queueId: number;
 
   async handleUserLoggedIn(username: string) {
     console.log('User logged in:', username);
 
     const connection = await amqp.connect('amqp://guest:guest@localhost:5672');
     const channel = await connection.createChannel();
-    await channel.assertQueue(username);
+    channel.assertQueue(username, (error2, ok) => {
+      if (error2) {
+        throw error2;
+      }
+      console.log(`Queue ${username} created`);
+    });
 
     await channel.bindQueue(username, 'exchange', 'UserLoggedIn');
 
-    channel.consume(username, (msg) => {
+    const options = {
+      durable: true,
+    };
+
+    channel.consume(username, options, (msg) => {
       if (msg !== null) {
         console.log(msg.content.toString());
         channel.ack(msg);

@@ -28,17 +28,17 @@ type Conversation {
 }
 
 type Query {
-  messages: [Message!]!
-  message(id: String!): Message!
   users: [User!]!
   user(id: String!): User!
+  messages: [Message!]!
+  message(id: String!): Message!
   conversations: [Conversation!]!
   conversation(id: String!): Conversation!
 }
 
 type Mutation {
-  createMessage(content: String!, senderId: String!, conversationId: String!): Message!
   createUser(email: String!, username: String!, password: String!): User!
+  createMessage(content: String!, senderId: String!, conversationId: String!): Message!
   createConversation(createConversationInput: CreateConversationInput!): Conversation!
 }
 

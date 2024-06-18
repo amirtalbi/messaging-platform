@@ -13,3 +13,9 @@ services:
       POSTGRES_DB: messaging
     ports:
       - '5432:5432'
+  graphql:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '3000:3000'

@@ -7,7 +7,8 @@ import { UserModule } from './user/user.module';
 import { ConversationModule } from './conversation/conversation.module';
 import { MessageModule } from './message/message.module';
 import { PrismaService } from './prisma.service';
-import { RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
+import { RabbitMQModule } from './rabbitmq/rabbitmq.module';
+import { UserResolver } from './user/user.resolver';
 
 @Module({
   imports: [
@@ -15,20 +16,12 @@ import { RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
     }),
-    RabbitMQModule.forRoot(RabbitMQModule, {
-      exchanges: [
-        {
-          name: 'exchange',
-          type: 'topic',
-        },
-      ],
-      uri: process.env.RABBITMQ_URI || 'amqp://guest:guest@localhost:5672',
-    }),
     AuthModule,
     UserModule,
     ConversationModule,
     MessageModule,
+    RabbitMQModule
   ],
-  providers: [PrismaService],
+  providers: [PrismaService, UserResolver],
 })
 export class AppModule {}
