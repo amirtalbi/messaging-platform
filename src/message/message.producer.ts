@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { AmqpConnection } from '@golevelup/nestjs-rabbitmq';
+import { MessageConsumer } from './message.consumer';
 
 @Injectable()
 export class MessageProducer {
-  constructor(private readonly amqpConnection: AmqpConnection) {}
+  constructor(private readonly messageConsumer: MessageConsumer) {}
 
   async sendMessage(message: any) {
-    await this.amqpConnection.publish('exchange', 'routing-key', message);
+    await this.messageConsumer.handleMessage(message);
   }
 }
