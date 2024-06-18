@@ -3,7 +3,7 @@ import { MessageService } from './message.service';
 import { MessageResolver } from './message.resolver';
 import { MessageProducer } from './message.producer';
 import { MessageConsumer } from './message.consumer';
-import { PrismaService } from '../prisma.service';
+import { PrismaService } from '../prisma.service'; // Import PrismaService
 import { RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
 
 @Module({
@@ -18,6 +18,6 @@ import { RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
       uri: 'amqp://localhost',
     }),
   ],
-  providers: [MessageService, MessageResolver, MessageProducer, MessageConsumer, PrismaService],
+  providers: [MessageService, MessageResolver, MessageProducer, MessageConsumer, PrismaService], // Provide PrismaService
 })
 export class MessageModule {}
