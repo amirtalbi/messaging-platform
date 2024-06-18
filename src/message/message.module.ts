@@ -4,8 +4,20 @@ import { MessageResolver } from './message.resolver';
 import { MessageProducer } from './message.producer';
 import { MessageConsumer } from './message.consumer';
 import { PrismaService } from '../prisma.service';
+import { RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
 
 @Module({
+  imports: [
+    RabbitMQModule.forRoot(RabbitMQModule, {
+      exchanges: [
+        {
+          name: 'exchange',
+          type: 'topic',
+        },
+      ],
+      uri: 'amqp://localhost',
+    }),
+  ],
   providers: [MessageService, MessageResolver, MessageProducer, MessageConsumer, PrismaService],
 })
 export class MessageModule {}
