@@ -17,7 +17,10 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "prisma:format": "npx prisma format --schema src/prisma/schema.prisma",
+    "prisma:generate": "npx prisma generate --schema src/prisma/schema.prisma",
+    "prisma:migrate": "npx prisma migrate dev --name init --schema src/prisma/schema.prisma"
   },
   "dependencies": {
     "@golevelup/nestjs-rabbitmq": "^5.3.0",

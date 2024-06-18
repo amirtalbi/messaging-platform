@@ -8,8 +8,8 @@ services:
   postgres:
     image: 'postgres'
     environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
       POSTGRES_DB: messaging
     ports:
       - '5432:5432'
