@@ -1,0 +1,42 @@
+<div class="form-container">
+  <form (ngSubmit)="onSubmit()" #userForm="ngForm">
+    <div class="form-group">
+      <label for="name">Name:</label>
+      <input
+        type="text"
+        id="name"
+        name="name"
+        ngModel
+        required
+        minlength="4"
+        #name="ngModel"
+        class="form-control"
+      />
+      <div *ngIf="name.invalid && name.touched" class="error">
+        Name is required and must be at least 4 characters long.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input
+        type="email"
+        id="email"
+        name="email"
+        ngModel
+        required
+        email
+        pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$"
+        #email="ngModel"
+        class="form-control"
+      />
+      <div *ngIf="email.invalid && email.touched" class="error">
+        Please enter a valid email address.
+      </div>
+    </div>
+
+    <button type="submit" [disabled]="userForm.invalid" class="btn btn-primary">
+      Submit
+    </button>
+  </form>
+</div>
