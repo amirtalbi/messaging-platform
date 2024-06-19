@@ -13,8 +13,8 @@ export class UserService {
     return this.prisma.user.findUnique({ where: { id } });
   }
 
-  async findOneByEmail(email: string) {
-    return this.prisma.user.findUnique({ where: { email } });
+  async findOneByEmail(username: string) {
+    return this.prisma.user.findUnique({ where: { username } });
   }
 
   async create(data: any) {
@@ -27,5 +27,9 @@ export class UserService {
 
   async delete(id: string) {
     return this.prisma.user.delete({ where: { id } });
+  }
+
+  async login(data: any) {
+    return this.prisma.user.findFirst({ where: data });
   }
 }

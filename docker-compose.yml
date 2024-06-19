@@ -8,6 +8,8 @@ services:
       - '15672:15672'
     networks:
       - private
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
 
   postgres:
     image: 'postgres'
@@ -21,10 +23,12 @@ services:
       - private
     depends_on:
       - rabbitmq
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
 
   graphql:
     build:
-      context: .
+      context: ./api
       dockerfile: Dockerfile
     ports:
       - '3000:3000'
@@ -36,3 +40,7 @@ services:
 
 networks:
   private:
+
+volumes:
+  rabbitmq_data:
+  postgres_data:
