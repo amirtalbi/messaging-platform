@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { AuthComponent } from './auth/auth.component';
 import { ChatComponent } from './chat/chat.component';
 import { GraphQLModule } from './graphql.module';
+import { AuthService } from './auth/auth.service';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,7 @@ import { GraphQLModule } from './graphql.module';
     HttpClientModule,
     FormsModule
   ],
-  providers: [],
+  providers: [AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
