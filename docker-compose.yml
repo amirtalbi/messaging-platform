@@ -1,10 +1,14 @@
-version: '3'
+version: '3.8'
+
 services:
   rabbitmq:
     image: 'rabbitmq:3-management'
     ports:
       - '5672:5672'
       - '15672:15672'
+    networks:
+      - private
+
   postgres:
     image: 'postgres'
     environment:
@@ -13,9 +17,22 @@ services:
       POSTGRES_DB: messaging
     ports:
       - '5432:5432'
+    networks:
+      - private
+    depends_on:
+      - rabbitmq
+
   graphql:
     build:
       context: .
       dockerfile: Dockerfile
     ports:
       - '3000:3000'
+    networks:
+      - private
+    depends_on:
+      - rabbitmq
+      - postgres
+
+networks:
+  private:
