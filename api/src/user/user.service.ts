@@ -30,6 +30,6 @@ export class UserService {
   }
 
   async login(data: any) {
-    return this.prisma.user.findFirst({ where: data });
+    return this.prisma.user.findUnique({ where: data });
   }
 }
