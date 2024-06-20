@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
+import * as jwt from 'jsonwebtoken';
 import { UserService } from '../user/user.service'; // Import UserService
 import * as bcrypt from 'bcrypt';
 import { MessageProducer } from 'src/message/message.producer';
@@ -9,7 +9,6 @@ import { User } from '@prisma/client';
 export class AuthService {
   constructor(
     private readonly userService: UserService,
-    private readonly jwtService: JwtService,
     private readonly messageProducer: MessageProducer,
   ) {}
 
@@ -24,7 +23,12 @@ export class AuthService {
 
   generateToken(user: User): string {
     const payload = { username: user.username, sub: user.id };
-    return this.jwtService.sign(payload);
+    console.log(payload)
+    return jwt.sign(
+      payload,
+      process.env.JWT_SECRET,
+      { expiresIn: '1h' },
+    );
   }
 
   async login(user: any) {
@@ -34,7 +38,11 @@ export class AuthService {
       data: payload,
     });
     return {
-      access_token: this.jwtService.sign(payload),
+      access_token: jwt.sign(
+        payload,
+        process.env.JWT_SECRET,
+        { expiresIn: '1h' },
+      )
     };
   }
 

@@ -38,5 +38,6 @@ import { MessageService } from 'src/message/message.service';
     MessageService,
     PrismaService,
   ],
+  exports: [AuthService]
 })
 export class AuthModule {}

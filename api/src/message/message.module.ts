@@ -12,6 +12,7 @@ import { RabbitMQModule } from 'src/rabbitmq/rabbitmq.module';
     UserModule,
     RabbitMQModule
   ],
-  providers: [MessageService, MessageResolver, MessageProducer, MessageConsumer, PrismaService], // Provide PrismaService
+  providers: [MessageService, MessageResolver, MessageProducer, MessageConsumer, PrismaService], 
+  exports: [MessageProducer, MessageConsumer, MessageService],
 })
 export class MessageModule {}
