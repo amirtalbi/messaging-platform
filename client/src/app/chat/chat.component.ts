@@ -1,15 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Apollo } from 'apollo-angular';
-import gql from 'graphql-tag';
 
-const GET_USER_BY_ID = gql`
-  query GetUserById($id: Int!) {
-    getUserById(id: $id) {
-      id
-      name
-    }
-  }
-`;
 
 @Component({
   selector: 'app-chat',
@@ -23,17 +14,8 @@ export class ChatComponent implements OnInit {
   constructor(private apollo: Apollo) {}
 
   ngOnInit() {
-    this.apollo
-      .watchQuery<any>({
-        query: GET_USER_BY_ID,
-        variables: {
-          id: 1,
-        },
-      })
-      .valueChanges.subscribe(({ data }) => {
-        console.log('data', data);
-        this.chats = data.chats;
-      });
+    // Logic
+    console.log('Chat component initialized');
   }
 
   selectChat(chat: any) {

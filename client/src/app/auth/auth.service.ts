@@ -1,11 +1,15 @@
 import { Injectable } from '@angular/core';
+import { Apollo } from 'apollo-angular';
+import { Observable, map } from 'rxjs';
+import { USER_MUTATION } from './user-mutation';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
   private isLoggedIn = false;
 
+  constructor(private apollo: Apollo) {}
 
   login() {
     this.isLoggedIn = true;
@@ -17,5 +21,22 @@ export class AuthService {
 
   isAuthenticated(): boolean {
     return this.isLoggedIn;
+  }
+
+  createOrLogUser(username: string, password: string): Observable<any> {
+    try {
+      return this.apollo
+        .mutate({
+          mutation: USER_MUTATION,
+          variables: {
+            username,
+            password,
+          },
+        })
+        .pipe(map((result: any) => result.data.user));
+    } catch (err) {
+      console.error('Error during authentication:', err);
+      return null;
+    }
   }
 }

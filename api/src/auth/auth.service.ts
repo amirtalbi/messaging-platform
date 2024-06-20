@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import * as jwt from 'jsonwebtoken';
-import { UserService } from '../user/user.service'; // Import UserService
-import * as bcrypt from 'bcrypt';
-import { MessageProducer } from 'src/message/message.producer';
 import { User } from '@prisma/client';
+import * as bcrypt from 'bcrypt';
+import * as jwt from 'jsonwebtoken';
+import { MessageProducer } from 'src/message/message.producer';
+import { UserService } from '../user/user.service'; // Import UserService
 
 @Injectable()
 export class AuthService {
@@ -12,23 +12,9 @@ export class AuthService {
     private readonly messageProducer: MessageProducer,
   ) {}
 
-  // async validateUser(email: string, pass: string): Promise<any> {
-  //   const user = await this.userService.findOneByEmail(email);
-  //   if (user && (await bcrypt.compare(pass, user.password))) {
-  //     const { password, ...result } = user;
-  //     return result;
-  //   }
-  //   return null;
-  // }
-
   generateToken(user: User): string {
     const payload = { username: user.username, sub: user.id };
-    console.log(payload)
-    return jwt.sign(
-      payload,
-      process.env.JWT_SECRET,
-      { expiresIn: '1h' },
-    );
+    return jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' });
   }
 
   async login(user: any) {
@@ -38,11 +24,9 @@ export class AuthService {
       data: payload,
     });
     return {
-      access_token: jwt.sign(
-        payload,
-        process.env.JWT_SECRET,
-        { expiresIn: '1h' },
-      )
+      access_token: jwt.sign(payload, process.env.JWT_SECRET, {
+        expiresIn: '1h',
+      }),
     };
   }
 

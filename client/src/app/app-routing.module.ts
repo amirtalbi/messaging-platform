@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthComponent } from './auth/auth.component';
+import { AuthGuard } from './auth/auth.guard';
 import { ChatComponent } from './chat/chat.component';
-import { AuthGuard } from './auth/auth-guard.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: '/auth', pathMatch: 'full' },
