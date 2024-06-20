@@ -4,7 +4,6 @@
 
 type User {
   id: ID!
-  email: String!
   username: String!
   password: String!
 }
@@ -29,7 +28,6 @@ type Conversation {
 
 type Query {
   users: [User!]!
-  user(id: String!): User!
   messages: [Message!]!
   message(id: String!): Message!
   conversations: [Conversation!]!
@@ -37,7 +35,7 @@ type Query {
 }
 
 type Mutation {
-  createUser(email: String!, username: String!, password: String!): User!
+  user(username: String!, password: String!): User!
   createMessage(content: String!, senderId: String!, conversationId: String!): Message!
   createConversation(createConversationInput: CreateConversationInput!): Conversation!
 }

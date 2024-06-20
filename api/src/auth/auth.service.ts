@@ -3,6 +3,7 @@ import { JwtService } from '@nestjs/jwt';
 import { UserService } from '../user/user.service'; // Import UserService
 import * as bcrypt from 'bcrypt';
 import { MessageProducer } from 'src/message/message.producer';
+import { User } from '@prisma/client';
 
 @Injectable()
 export class AuthService {
@@ -12,13 +13,18 @@ export class AuthService {
     private readonly messageProducer: MessageProducer,
   ) {}
 
-  async validateUser(email: string, pass: string): Promise<any> {
-    const user = await this.userService.findOneByEmail(email);
-    if (user && (await bcrypt.compare(pass, user.password))) {
-      const { password, ...result } = user;
-      return result;
-    }
-    return null;
+  // async validateUser(email: string, pass: string): Promise<any> {
+  //   const user = await this.userService.findOneByEmail(email);
+  //   if (user && (await bcrypt.compare(pass, user.password))) {
+  //     const { password, ...result } = user;
+  //     return result;
+  //   }
+  //   return null;
+  // }
+
+  generateToken(user: User): string {
+    const payload = { username: user.username, sub: user.id };
+    return this.jwtService.sign(payload);
   }
 
   async login(user: any) {
@@ -32,10 +38,9 @@ export class AuthService {
     };
   }
 
-  async register(email: string, username: string, password: string) {
+  async register(username: string, password: string) {
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = this.userService.create({
-      email,
       username,
       password: hashedPassword,
     });
