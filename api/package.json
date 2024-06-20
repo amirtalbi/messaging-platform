@@ -9,7 +9,7 @@
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
-    "start:dev": "nest start --watch",
+    "start:dev": "sleep 10 && npm run prisma:migrate && nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
@@ -20,7 +20,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "prisma:format": "npx prisma format --schema src/prisma/schema.prisma",
     "prisma:generate": "npx prisma generate --schema src/prisma/schema.prisma",
-    "prisma:migrate": "npx prisma migrate dev --name init --schema src/prisma/schema.prisma"
+    "prisma:migrate": "npx prisma migrate deploy --schema src/prisma/schema.prisma"
   },
   "dependencies": {
     "@golevelup/nestjs-rabbitmq": "^5.3.0",
