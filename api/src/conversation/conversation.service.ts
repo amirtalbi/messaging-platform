@@ -15,6 +15,22 @@ export class ConversationService {
     });
   }
 
+  async findByUserId(userId: string) {
+    return this.prisma.conversation.findMany({
+      where: {
+        participants: {
+          some: {
+            id: userId,
+          },
+        },
+      },
+      include: {
+        participants: true,
+        messages: true,
+      },
+    });
+  }
+
   async findOne(id: string) {
     return this.prisma.conversation.findUnique({
       where: { id },
