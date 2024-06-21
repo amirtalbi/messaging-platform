@@ -33,4 +33,20 @@ export class UserService {
   async login(data: any): Promise<User> {
     return this.prisma.user.findUnique({ where: data });
   }
+
+  async findUsersWithoutConversation(userId: string) {
+    return this.prisma.user.findMany({
+      where: {
+        conversations: {
+          none: {
+            participants: {
+              some: {
+                id: userId,
+              },
+            },
+          },
+        },
+      },
+    });
+  }
 }

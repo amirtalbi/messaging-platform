@@ -23,6 +23,18 @@ export class UserResolver {
     });
   }
 
+  @Query((returns) => [UserDto])
+  async userWithoutConversation(
+    @Args('userId') userId: string,
+  ): Promise<UserDto[]> {
+    const userWithoutConversation =
+      await this.userService.findUsersWithoutConversation(userId);
+    return userWithoutConversation.map((user) => {
+      const { password, ...userWithoutPassword } = user;
+      return userWithoutPassword as UserDto;
+    });
+  }
+
   @Mutation((returns) => AuthPayload)
   async user(
     @Args('username') username: string,
