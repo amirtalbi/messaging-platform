@@ -2,9 +2,9 @@ import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { UserService } from './user.service';
 import { User } from './user.entity';
 import { RabbitMQService } from 'src/rabbitmq/rabbitmq.service';
-import * as jwt from 'jsonwebtoken';
 import { AuthPayload } from 'src/auth/auth.dto';
 import { AuthService } from 'src/auth/auth.service';
+import { UserDto } from './user.dto';
 
 @Resolver((of) => User)
 export class UserResolver {
@@ -13,6 +13,15 @@ export class UserResolver {
     private readonly rabbitMQService: RabbitMQService,
     private readonly authService: AuthService,
   ) {}
+
+  @Query((returns) => [UserDto])
+  async users(): Promise<UserDto[]> {
+    const users = await this.userService.findAll();
+    return users.map((user) => {
+      const { password, ...userWithoutPassword } = user;
+      return userWithoutPassword as UserDto;
+    });
+  }
 
   @Mutation((returns) => AuthPayload)
   async user(
@@ -29,6 +38,5 @@ export class UserResolver {
     const token = this.authService.generateToken(user);
 
     return { user, token };
-
   }
 }
