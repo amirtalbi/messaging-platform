@@ -3,28 +3,37 @@ import { ConversationService } from './conversation.service';
 import { Conversation } from './conversation.entity';
 import { CreateConversationInput } from './dto/create-conversation.dto';
 
-@Resolver(of => Conversation)
+@Resolver(() => Conversation)
 export class ConversationResolver {
-  constructor(private readonly conversationService: ConversationService) { }
+  constructor(private readonly conversationService: ConversationService) {}
 
-  @Query(returns => [Conversation])
+  @Query(() => [Conversation])
   async conversations() {
     return this.conversationService.findAll();
   }
 
-  @Query(returns => Conversation)
+  @Query(() => Conversation)
   async conversation(@Args('id', { type: () => String }) id: string) {
-    return this.conversationService.findOne(id);
+    const conversation = await this.conversationService.findOne(id);
+
+    conversation.messages = conversation.messages.filter(
+      (message) => message.senderId !== null,
+    );
+
+    return conversation;
   }
 
-  @Query(returns => [Conversation])
-  async conversationByUserId(@Args('userId', { type: () => String }) userId: string) {
+  @Query(() => [Conversation])
+  async conversationByUserId(
+    @Args('userId', { type: () => String }) userId: string,
+  ) {
     return this.conversationService.findByUserId(userId);
   }
 
-  @Mutation(returns => Conversation)
+  @Mutation(() => Conversation)
   async createConversation(
-    @Args('createConversationInput') createConversationInput: CreateConversationInput,
+    @Args('createConversationInput')
+    createConversationInput: CreateConversationInput,
   ) {
     return this.conversationService.create(createConversationInput);
   }

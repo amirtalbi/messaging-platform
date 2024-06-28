@@ -26,7 +26,11 @@ export class ConversationService {
       },
       include: {
         participants: true,
-        messages: true,
+        messages: {
+          include: {
+            sender: true,
+          },
+        },
       },
     });
   }
@@ -36,7 +40,11 @@ export class ConversationService {
       where: { id },
       include: {
         participants: true,
-        messages: true,
+        messages: {
+          include: {
+            sender: true,
+          },
+        },
       },
     });
   }
@@ -45,7 +53,7 @@ export class ConversationService {
     return this.prisma.conversation.create({
       data: {
         participants: {
-          connect: data.participants.map(id => ({ id })),
+          connect: data.participants.map((id) => ({ id })),
         },
       },
     });
