@@ -5,7 +5,7 @@ import { CreateConversationInput } from './dto/create-conversation.dto';
 
 @Resolver(of => Conversation)
 export class ConversationResolver {
-  constructor(private readonly conversationService: ConversationService) {}
+  constructor(private readonly conversationService: ConversationService) { }
 
   @Query(returns => [Conversation])
   async conversations() {
@@ -17,7 +17,7 @@ export class ConversationResolver {
     return this.conversationService.findOne(id);
   }
 
-  @Query(returns => Conversation)
+  @Query(returns => [Conversation])
   async conversationByUserId(@Args('userId', { type: () => String }) userId: string) {
     return this.conversationService.findByUserId(userId);
   }
