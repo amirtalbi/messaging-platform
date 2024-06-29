@@ -14,7 +14,6 @@ export class ChatComponent implements OnInit {
   constructor(private apollo: Apollo) {}
 
   ngOnInit() {
-    // Logic
     console.log('Chat component initialized');
   }
 

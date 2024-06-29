@@ -1,9 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
+import { ChatGateway } from 'src/chat/chat.gateway';
 
 @Injectable()
 export class MessageService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly chatGateway: ChatGateway,
+  ) {}
 
   async findAll() {
     return this.prisma.message.findMany();
@@ -14,7 +18,11 @@ export class MessageService {
   }
 
   async create(data: any) {
-    return this.prisma.message.create({ data });
+    const message = this.prisma.message.create({ data });
+
+    this.chatGateway.emitNewMessageTrigger(data.conversationId);
+
+    return message;
   }
 
   async update(id: string, data: any) {

@@ -3,7 +3,7 @@ import { User } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
 import { MessageProducer } from 'src/message/message.producer';
-import { UserService } from '../user/user.service'; // Import UserService
+import { UserService } from '../user/user.service';
 
 @Injectable()
 export class AuthService {

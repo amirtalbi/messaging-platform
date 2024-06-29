@@ -9,6 +9,7 @@ import { MessageModule } from './message/message.module';
 import { PrismaService } from './prisma.service';
 import { RabbitMQModule } from './rabbitmq/rabbitmq.module';
 import { UserResolver } from './user/user.resolver';
+import { ChatGateway } from './chat/chat.gateway';
 
 @Module({
   imports: [
@@ -20,8 +21,8 @@ import { UserResolver } from './user/user.resolver';
     UserModule,
     ConversationModule,
     MessageModule,
-    RabbitMQModule
+    RabbitMQModule,
   ],
-  providers: [PrismaService, UserResolver],
+  providers: [PrismaService, UserResolver, ChatGateway],
 })
 export class AppModule {}

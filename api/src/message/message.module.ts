@@ -3,16 +3,21 @@ import { MessageService } from './message.service';
 import { MessageResolver } from './message.resolver';
 import { MessageProducer } from './message.producer';
 import { MessageConsumer } from './message.consumer';
-import { PrismaService } from '../prisma.service'; // Import PrismaService
+import { PrismaService } from '../prisma.service';
 import { UserModule } from 'src/user/user.module';
 import { RabbitMQModule } from 'src/rabbitmq/rabbitmq.module';
+import { ChatGateway } from 'src/chat/chat.gateway';
 
 @Module({
-  imports: [
-    UserModule,
-    RabbitMQModule
+  imports: [UserModule, RabbitMQModule],
+  providers: [
+    MessageService,
+    MessageResolver,
+    MessageProducer,
+    MessageConsumer,
+    PrismaService,
+    ChatGateway,
   ],
-  providers: [MessageService, MessageResolver, MessageProducer, MessageConsumer, PrismaService], 
   exports: [MessageProducer, MessageConsumer, MessageService],
 })
 export class MessageModule {}

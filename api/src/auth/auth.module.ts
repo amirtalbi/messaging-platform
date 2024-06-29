@@ -3,13 +3,14 @@ import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { AuthService } from './auth.service';
 import { JwtStrategy } from './jwt.strategy';
-import { UserService } from '../user/user.service'; // Import UserService
-import { PrismaService } from '../prisma.service'; // Import PrismaService
+import { UserService } from '../user/user.service';
+import { PrismaService } from '../prisma.service';
 import { MessageModule } from 'src/message/message.module';
 import { MessageProducer } from 'src/message/message.producer';
 import { RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
 import { MessageConsumer } from 'src/message/message.consumer';
 import { MessageService } from 'src/message/message.service';
+import { ChatGateway } from 'src/chat/chat.gateway';
 
 @Module({
   imports: [
@@ -37,7 +38,8 @@ import { MessageService } from 'src/message/message.service';
     MessageConsumer,
     MessageService,
     PrismaService,
+    ChatGateway,
   ],
-  exports: [AuthService]
+  exports: [AuthService],
 })
 export class AuthModule {}
