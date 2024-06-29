@@ -1,7 +1,10 @@
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { ConversationService } from './conversation.service';
 import { Conversation } from './conversation.entity';
-import { CreateConversationInput } from './dto/create-conversation.dto';
+import {
+  CreateConversationInput,
+  CreatedConversation,
+} from './dto/create-conversation.dto';
 
 @Resolver(() => Conversation)
 export class ConversationResolver {
@@ -30,7 +33,7 @@ export class ConversationResolver {
     return this.conversationService.findByUserId(userId);
   }
 
-  @Mutation(() => Conversation)
+  @Mutation(() => CreatedConversation)
   async createConversation(
     @Args('createConversationInput')
     createConversationInput: CreateConversationInput,
