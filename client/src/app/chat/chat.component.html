@@ -1,18 +1,40 @@
-<div class="container">
-  <div class="chat-list">
-    <div
-      class="chat-item"
-      *ngFor="let chat of chats"
-      (click)="selectChat(chat)"
-    >
-      <div class="chat-name">{{ chat.name }}</div>
-      <div class="chat-message">{{ chat.message }}</div>
-      <div class="chat-time">{{ chat.time }}</div>
+<div class="container-full">
+  <div class="col-2 bg-info">
+    <p>GJABCHAT</p>
+    <input type="text" class="form-control user-search" placeholder="Rechercher une personne" (input)="onSearch($event)">
+
+    <div class="col-12 user-list">
+      <ul class="search-result-list">
+        <li *ngFor="let user of searchResults$ | async" (click)="createConversation(user.id)" class="user-item">
+          User trouvé : {{ user.username }}
+        </li>
+      </ul>
+      <ul class="conversation-list" *ngIf="!isSearchOnGoing">
+        <li *ngFor="let conversation of conversations" (click)="getMessages(conversation)" class="user-item">
+          <b>conversation :{{ conversation.id | slice:0:4 }}</b><br>
+          <i>Avec: <span *ngFor="let participant of conversation.participants">*{{ participant.username }} </span></i>
+        </li>
+      </ul>
     </div>
   </div>
-  <div class="chat-detail" *ngIf="selectedChat">
-    <div class="message" *ngFor="let message of selectedChat.messages">
-      <p>{{ message.text }}</p>
+  <div class="col-10">
+    <div>
+      <div *ngIf="conversationSelected" class="conversation-header bg-info col-12">
+        <h5>Conversation : {{ conversationSelected.id | slice:0:4 }}</h5>
+        <p>Participants : <span *ngFor="let participant of conversationSelected.participants">-{{ participant.username }} </span></p>
+      </div>
+    </div>
+    <div class="message-body col-12">
+      <div class="message-list">
+        <div class="message-item" *ngFor="let message of messages" [ngClass]=" isSendByMe(message.sender.id) ?'right-position':''">
+          <div class="message-text"  [ngClass]=" isSendByMe(message.sender.id) ?'user-message':'friend-message'">{{ message.content }}</div>
+          <i class="message-time">{{ message.createdAt |date:'d/M/yy, h:mm'}}</i>
+        </div>
+      </div>
+    </div>
+    <div class="message-input col-12" *ngIf="conversationSelected">
+      <textarea placeholder="Saisissez votre message..." [(ngModel)]="newMessage" (keyup.enter)="sendMessage()" class="form-control"></textarea>
+      <button (click)="sendMessage()" class="btn btn-info">Envoyer</button>
     </div>
   </div>
 </div>

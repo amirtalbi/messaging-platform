@@ -34,7 +34,9 @@ export class AuthComponent implements OnInit {
         next: (response) => {
           this.authService.login();
           localStorage.setItem('token', response.token);
+          localStorage.setItem('userId', response.user.id);
           this.router.navigate(['/chat']);
+
         },
         error: (err) => {
           console.error('Error during authentication:', err);
