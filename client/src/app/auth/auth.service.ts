@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Apollo } from 'apollo-angular';
-import { Observable, map } from 'rxjs';
+import { Observable } from 'rxjs';
 import { USER_MUTATION } from './user-mutation';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
