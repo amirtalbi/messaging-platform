@@ -75,12 +75,13 @@ export class ChatComponent implements OnInit {
   }
 
   loadConversation(conversationId: string) {
-    this.chatService.getConversationById(conversationId).subscribe((result: any) => {
+    setTimeout(() => {
+          this.chatService.getConversationById(conversationId).subscribe((result: any) => {
       this.conversationSelected = result.data.conversation;
       this.messages = this.conversationSelected.messages;
-      console.log('Conversation mise à jour:', this.conversationSelected);
       this.cdr.detectChanges();
     });
+    },400)
   }
 
   onSearch(event: Event): void {
