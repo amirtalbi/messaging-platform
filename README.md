@@ -2,6 +2,8 @@
 
 This is the README file for the Messaging Platform project. It provides instructions on how to set up and run the project locally.
 
+Developers : ANDREUX Guillaume, GIRARD Baptiste, OMILUS Jean-Baptiste & TALBI Amir.
+
 ## Prerequisites
 
 Before running the project, make sure you have the following installed:
