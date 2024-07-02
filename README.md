@@ -41,7 +41,7 @@ The Messaging Platform project consists of the following services:
 
 - PostgreSQL: A relational database service running on port 5432. The database name is `messaging`, and the default username and password are both `postgres`.
 
-- GraphQL API: A GraphQL API service running on port 3000. This service depends on RabbitMQ and PostgreSQL.
+- GraphQL API: A GraphQL API service running on port 3000 at http://localhost:3000/graphql. This service depends on RabbitMQ and PostgreSQL.
 
 ## Additional Information
 
