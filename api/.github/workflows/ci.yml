@@ -25,13 +25,13 @@ jobs:
       run: npm install -g newman
 
     - name: Run Newman tests
-      run: newman run ../../test/testUser.json
+      run: newman run ../../src/test/testUser.json
 
     - name: Generate Newman HTML report
-      run: newman run ../../test/testUser.json -r html --reporter-html-export ../../test/report.html
+      run: newman run ../../src/test/testUser.json -r html --reporter-html-export ../../src/test/report.html
 
     - name: Upload Newman HTML report
       uses: actions/upload-artifact@v2
       with:
         name: newman-report
-        path: ./../test/report.html
+        path: ./../src/test/report.html
