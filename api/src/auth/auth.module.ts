@@ -28,7 +28,7 @@ import { RedisService } from 'src/redis/redis.service';
           type: 'topic',
         },
       ],
-      uri: process.env.RABBITMQ_URI || 'amqp://guest:guest@localhost:5672',
+      uri: process.env.RABBITMQ_URI || 'amqp://rabbitmq:5672',
     }),
   ],
   providers: [

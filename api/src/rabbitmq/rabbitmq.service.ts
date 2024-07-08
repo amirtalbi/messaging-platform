@@ -11,7 +11,7 @@ export class RabbitMQService {
   }
 
   private connect() {
-    amqp.connect('amqp://rabbitmq:5672', (error0, connection) => {
+    amqp.connect(process.env.RABBITMQ_URL, (error0, connection) => {
       if (error0) {
         throw error0;
       }

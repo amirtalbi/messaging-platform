@@ -1,0 +1,29 @@
+{
+  "name": "projet",
+  "version": "1.0.0",
+  "description": "This is the README file for the Messaging Platform project. It provides instructions on how to set up and run the project locally.",
+  "main": "index.js",
+  "dependencies": {
+    "cluster-key-slot": "^1.1.2",
+    "debug": "^4.3.5",
+    "denque": "^2.1.0",
+    "ioredis": "^5.4.1",
+    "lodash.defaults": "^4.2.0",
+    "lodash.isarguments": "^3.1.0",
+    "ms": "^2.1.2",
+    "redis-errors": "^1.2.0",
+    "redis-parser": "^3.0.0",
+    "standard-as-callback": "^2.1.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "docker:login": "docker login -u amirtalbi --password-stdin",
+    "docker:build:client": "docker build -t amirtalbi/whatsapp-client:1.0.0 ./client",
+    "docker:build:api": "docker build -t amirtalbi/whatsapp-api:1.0.0 ./api",
+    "docker:publish:client": "docker push amirtalbi/whatsapp-client:1.0.0",
+    "docker:publish:api": "docker push amirtalbi/whatsapp-api:1.0.0"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
