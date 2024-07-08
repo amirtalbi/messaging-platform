@@ -7,6 +7,7 @@ import { PrismaService } from '../prisma.service';
 import { UserModule } from 'src/user/user.module';
 import { RabbitMQModule } from 'src/rabbitmq/rabbitmq.module';
 import { ChatGateway } from 'src/chat/chat.gateway';
+import { RedisService } from 'src/redis/redis.service';
 
 @Module({
   imports: [UserModule, RabbitMQModule],
@@ -17,6 +18,7 @@ import { ChatGateway } from 'src/chat/chat.gateway';
     MessageConsumer,
     PrismaService,
     ChatGateway,
+    RedisService,
   ],
   exports: [MessageProducer, MessageConsumer, MessageService],
 })

@@ -9,6 +9,7 @@ import { RabbitMQModule } from 'src/rabbitmq/rabbitmq.module';
 import { PrismaService } from '../prisma.service';
 import { UserResolver } from './user.resolver';
 import { UserService } from './user.service';
+import { RedisService } from 'src/redis/redis.service';
 
 @Module({
   imports: [RabbitMQModule],
@@ -22,6 +23,7 @@ import { UserService } from './user.service';
     MessageProducer,
     MessageConsumer,
     ChatGateway,
+    RedisService,
   ],
   exports: [UserService],
 })

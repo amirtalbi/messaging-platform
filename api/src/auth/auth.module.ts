@@ -11,6 +11,7 @@ import { RabbitMQModule } from '@golevelup/nestjs-rabbitmq';
 import { MessageConsumer } from 'src/message/message.consumer';
 import { MessageService } from 'src/message/message.service';
 import { ChatGateway } from 'src/chat/chat.gateway';
+import { RedisService } from 'src/redis/redis.service';
 
 @Module({
   imports: [
@@ -39,6 +40,7 @@ import { ChatGateway } from 'src/chat/chat.gateway';
     MessageService,
     PrismaService,
     ChatGateway,
+    RedisService,
   ],
   exports: [AuthService],
 })

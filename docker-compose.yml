@@ -1,6 +1,13 @@
 version: "3.8"
 
 services:
+  redis:
+    image: "redis:latest"
+    ports:
+      - "6379:6379"
+    networks:
+      - private
+  
   rabbitmq:
     image: "rabbitmq:3-management"
     ports:
@@ -37,6 +44,7 @@ services:
     depends_on:
       - rabbitmq
       - postgres
+      - redis
 
   client:
     build:
